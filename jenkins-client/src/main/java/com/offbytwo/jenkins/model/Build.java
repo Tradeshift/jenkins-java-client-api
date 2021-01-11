@@ -8,6 +8,7 @@ package com.offbytwo.jenkins.model;
 
 import java.io.IOException;
 
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpResponseException;
 
 public class Build extends BaseModel {
@@ -82,16 +83,19 @@ public class Build extends BaseModel {
         return url;
     }
 
-    protected void setNumber(int number) {
+    protected Build setNumber(int number) {
         this.number = number;
+        return this;
     }
 
-    protected void setQueueId(int queueId) {
+    protected Build setQueueId(int queueId) {
         this.queueId = queueId;
+        return this;
     }
 
-    protected void setUrl(String url) {
+    protected Build setUrl(String url) {
         this.url = url;
+        return this;
     }
 
     /**
@@ -122,6 +126,7 @@ public class Build extends BaseModel {
      * @throws IOException in case of an error.
      */
     public TestResult getTestResult() throws IOException {
+
         return client.get(this.getUrl() + "/testReport/?depth=1", TestResult.class);
     }
 
@@ -140,13 +145,40 @@ public class Build extends BaseModel {
         try {
 
             return client.get(url + "stop");
-        } catch (IOException ex) {
-            if (((HttpResponseException) ex).getStatusCode() == 405) {
+        } catch (HttpResponseException ex) {
+            if (ex.getStatusCode() == HttpStatus.SC_METHOD_NOT_ALLOWED) {
                 stopPost();
                 return "";
             }
+            throw ex;
         }
-        return "";
+    }
+
+    /** Stops the build which is currently in progress.  This version takes in
+     * a crumbFlag.  In some cases , an error is thrown which reads
+     * "No valid crumb was included in the request".  This stop method is used incase
+     * those issues occur
+     *
+     * @param crumbFlag flag used to specify if a crumb is passed into for the request
+     * @return the client url
+     * @throws HttpResponseException in case of an error.
+     * @throws IOException in case of an error.
+     */
+    public String Stop(boolean crumbFlag) throws HttpResponseException, IOException {
+        try {
+
+            return client.get(url + "stop");
+        } catch (HttpResponseException ex) {
+            if (ex.getStatusCode() == HttpStatus.SC_METHOD_NOT_ALLOWED) {
+                stopPost(crumbFlag);
+                return "";
+            }
+            throw ex;
+        }
+    }
+
+    private void stopPost(boolean crumbFlag) throws HttpResponseException, IOException {
+        client.post(url + "stop", crumbFlag);
     }
 
     private void stopPost() throws HttpResponseException, IOException {

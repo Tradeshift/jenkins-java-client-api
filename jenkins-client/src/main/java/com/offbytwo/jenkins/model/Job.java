@@ -6,18 +6,15 @@
 
 package com.offbytwo.jenkins.model;
 
-import static org.apache.commons.lang.StringUtils.join;
-
+import com.offbytwo.jenkins.client.util.EncodingUtils;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.Map;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-import com.google.common.escape.Escaper;
-import com.google.common.net.UrlEscapers;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Job extends BaseModel {
 
@@ -102,27 +99,55 @@ public class Job extends BaseModel {
     }
 
     /**
-     * Trigger a parameterized build
+     * Trigger a parameterized build with string parameters only
      *
      * @param params the job parameters
      * @return {@link QueueReference} for further analysis of the queued build.
      * @throws IOException in case of an error.
      */
     public QueueReference build(Map<String, String> params) throws IOException {
-        return build(params, false);
+        return build(params, null,false);
     }
 
     /**
-     * Trigger a parameterized build
+     * Trigger a parameterized build with string parameters only
      *
      * @param params the job parameters
-     * @param crumbFlag determines whether crumb flag is used
+     * @param crumbFlag true or false.
      * @return {@link QueueReference} for further analysis of the queued build.
      * @throws IOException in case of an error.
      */
     public QueueReference build(Map<String, String> params, boolean crumbFlag) throws IOException {
-        String qs = join(Collections2.transform(params.entrySet(), new MapEntryToQueryStringPair()), "&");
-        ExtractHeader location = client.post(url + "buildWithParameters?" + qs, null, ExtractHeader.class, crumbFlag);
+        return build(params,null,crumbFlag);
+    }
+
+    /**
+     * Trigger a parameterized build with file parameters
+     *
+     * @param params the job parameters
+     * @param fileParams the job file parameters
+     * @return {@link QueueReference} for further analysis of the queued build.
+     * @throws IOException in case of an error.
+     */
+    public QueueReference build(Map<String, String> params, Map<String, File> fileParams) throws IOException {
+        return build(params,fileParams,false);
+    }
+
+    /**
+     * Trigger a parameterized build with file parameters and crumbFlag
+     *
+     * @param params the job parameters
+     * @param fileParams the job file parameters
+     * @param crumbFlag determines whether crumb flag is used
+     * @return {@link QueueReference} for further analysis of the queued build.
+     * @throws IOException in case of an error.
+     */
+    public QueueReference build(Map<String, String> params, Map<String, File> fileParams, boolean crumbFlag) throws IOException {
+        String qs = params.entrySet().stream()
+                .map(s -> s.getKey() + "=" + s.getValue())
+                .collect(Collectors.joining("&"));
+//        String qs = join(Collections2.transform(params.entrySet(), new MapEntryToQueryStringPair()), "&");
+        ExtractHeader location = client.post(url + "buildWithParameters?" + qs,null, ExtractHeader.class, fileParams, crumbFlag);
         return new QueueReference(location.getLocation());
     }
 
@@ -155,8 +180,9 @@ public class Job extends BaseModel {
     private static class MapEntryToQueryStringPair implements Function<Map.Entry<String, String>, String> {
         @Override
         public String apply(Map.Entry<String, String> entry) {
-            Escaper escaper = UrlEscapers.urlFormParameterEscaper();
-            return escaper.escape(entry.getKey()) + "=" + escaper.escape(entry.getValue());
+            return EncodingUtils.formParameter(entry.getKey()) + "=" + EncodingUtils.formParameter(entry.getValue());
         }
     }
+
+
 }

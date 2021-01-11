@@ -88,7 +88,7 @@ public class JenkinsServerIT {
 
         JobWithDetails job = server.getJobs().get(JENKINS_TEST_JOB).details();
         BuildWithDetails build = job.getBuilds().get(0).details();
-        assertEquals("true", build.getParameters().get("someValue"));
+        assertEquals(Boolean.TRUE, build.getParameters().get("someValue"));
     }
 
     @Test
@@ -182,5 +182,27 @@ public class JenkinsServerIT {
 
         String confirmXml = server.getJobXml(JENKINS_TEST_JOB);
         assertTrue(confirmXml.contains(description));
+    }
+    
+    
+    @Test(expected=IllegalStateException.class)
+    public void testClose_ReuseAfterClosed() throws Exception {
+        final FreeStyleProject proj = jenkinsRule.getInstance().createProject(
+                FreeStyleProject.class, JENKINS_TEST_JOB);
+        final Map<String, Job> jobs = server.getJobs();
+        assertNotNull(jobs.get(proj.getName()));
+        server.close();
+        server.getJobs();        
+    }
+    
+    
+    @Test
+    public void testClose_CloseMultipleTimes() throws Exception {
+        final FreeStyleProject proj = jenkinsRule.getInstance().createProject(
+                FreeStyleProject.class, JENKINS_TEST_JOB);
+        final Map<String, Job> jobs = server.getJobs();
+        assertNotNull(jobs.get(proj.getName()));
+        server.close();
+        server.close();
     }
 }

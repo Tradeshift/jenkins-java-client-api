@@ -3,6 +3,7 @@
 [![MIT Licence](https://img.shields.io/github/license/jenkinsci/java-client-api.svg?label=License)](http://opensource.org/licenses/MIT)
 [![Maven Central](https://img.shields.io/maven-central/v/com.offbytwo.jenkins/jenkins-client.svg?label=Maven%20Central)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.offbytwo.jenkins%22%20a%3A%22jenkins-client%22)
 [![Build Status](https://travis-ci.org/jenkinsci/java-client-api.svg?branch=master)](https://travis-ci.org/jenkinsci/java-client-api)
+[![Javadocs](https://javadoc.io/badge/com.offbytwo.jenkins/jenkins-client.svg?color=blue)](https://javadoc.io/doc/com.offbytwo.jenkins/jenkins-client)
 
 ## Important Note
 
@@ -25,14 +26,14 @@ to your project. This can be done by using a Maven dependency like the following
 <dependency>
   <groupId>com.offbytwo.jenkins</groupId>
   <artifactId>jenkins-client</artifactId>
-  <version>0.3.7</version>
+  <version>0.3.8</version>
 </dependency>
 ```
 
 This can also being done by defining a Gradle dependency like this:
 
 ```
-compile 'com.offbytwo.jenkins:jenkins-client:0.3.7'
+compile 'com.offbytwo.jenkins:jenkins-client:0.3.8'
 ```
 
 Starting with a future release 0.4.0 the groupId/artifactId will change (NOT YET DONE!)
@@ -96,7 +97,8 @@ covered by the usual integration tests.
 
 You can find details about the different releases in the [Release Notes](https://github.com/jenkinsci/java-client-api/blob/master/ReleaseNotes.md).
 
- * [Release 0.3.8 NOT RELEASED YET](https://github.com/jenkinsci/java-client-api/blob/master/ReleaseNotes.md#release-038).
+ * [Release 0.3.9 NOT RELEASED YET](https://github.com/jenkinsci/java-client-api/blob/master/ReleaseNotes.md#release-039).
+ * [Release 0.3.8](https://github.com/jenkinsci/java-client-api/blob/master/ReleaseNotes.md#release-038).
  * [Release 0.3.7](https://github.com/jenkinsci/java-client-api/blob/master/ReleaseNotes.md#release-037).
  * [Release 0.3.6](https://github.com/jenkinsci/java-client-api/blob/master/ReleaseNotes.md#release-036).
  * [Release 0.3.5](https://github.com/jenkinsci/java-client-api/blob/master/ReleaseNotes.md#release-035).
