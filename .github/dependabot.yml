@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: maven
+    directory: /
+    schedule:
+      interval: daily
+  - package-ecosystem: maven
+    directory: /jenkins-client
+    schedule:
+      interval: daily
+  - package-ecosystem: maven
+    directory: /jenkins-client-it-docker
+    schedule:
+      interval: daily
