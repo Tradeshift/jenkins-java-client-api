@@ -3,7 +3,7 @@ credentials:1.28
 junit:1.63
 token-macro:1.12.1
 throttle-concurrents:1.9.0
-jacoco:1.0.19
+jacoco:3.3.5
 job-dsl:1.87
 config-file-provider:2.18
 testng-plugin:1.15
