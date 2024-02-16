@@ -6,5 +6,5 @@ throttle-concurrents:1.9.0
 jacoco:1.0.19
 job-dsl:1.87
 config-file-provider:2.18
-testng-plugin:1.15
+testng-plugin:835.v51ed3da_fcc35
 cloudbees-folder: 5.12
