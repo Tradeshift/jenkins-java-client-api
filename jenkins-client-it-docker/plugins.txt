@@ -1,7 +1,7 @@
 timestamper:1.26
 credentials:1.28
 junit:1.63
-token-macro:1.12.1
+token-macro:400.v35420b_922dcb_
 throttle-concurrents:1.9.0
 jacoco:1.0.19
 job-dsl:1.87
