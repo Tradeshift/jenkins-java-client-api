@@ -4,7 +4,7 @@ junit:1.63
 token-macro:1.12.1
 throttle-concurrents:1.9.0
 jacoco:1.0.19
-job-dsl:1.87
+job-dsl:1.88
 config-file-provider:2.18
 testng-plugin:1.15
 cloudbees-folder: 5.12
