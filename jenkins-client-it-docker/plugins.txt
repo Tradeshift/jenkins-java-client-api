@@ -1,4 +1,4 @@
-timestamper:1.27
+timestamper:1.28
 credentials:1.28
 junit:1.63
 token-macro:1.12.1
