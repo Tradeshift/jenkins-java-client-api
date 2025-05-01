@@ -1,4 +1,6 @@
 {
-  "description": "Jenkins-java-client-api",
-  "maintainers": ["Platform Ops"]
+    "description": "Jenkins-java-client-api",
+    "maintainers": [
+        "platform-ops"
+    ]
 }
