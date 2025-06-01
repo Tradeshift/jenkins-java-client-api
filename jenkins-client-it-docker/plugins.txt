@@ -1,6 +1,6 @@
 timestamper:1.28
 credentials:1.28
-junit:1.63
+junit:1335.v6b_a_a_e18534e1
 token-macro:1.12.1
 throttle-concurrents:1.9.0
 jacoco:1.0.19
