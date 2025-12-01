@@ -1,5 +1,5 @@
 timestamper:1.30
-credentials:1.28
+credentials:1453.v9b_a_29777a_b_fd
 junit:1.63
 token-macro:1.12.1
 throttle-concurrents:1.9.0
